@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+
+<!-- สำคัญมากสำหรับ iPhone -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Baccarat DNA x9 PRO V10</title>
+
+<style>
+*{
+ box-sizing:border-box;
+ -webkit-tap-highlight-color:transparent;
+}
+body{
+ margin:0;
+ background:#020617;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ color:white;
+}
+.app{
+ width:100vw;
+ height:100vh;
+ margin:0 auto;
+ position:relative;
+ display:flex;
+ flex-direction:column;
+ max-width:1000px;
+}
+
+/* ===== EXPIRY BAR (เพิ่มใหม่ จุดเดียว) ===== */
+#expiryBar{
+ display:none;
+ width:100%;
+ text-align:center;
+ font-size:12px;
+ padding:6px 4px;
+ background:#020617;
+ color:#facc15;
+ border-bottom:1px solid #1f2937;
+}
+
+/* ===== LOGIN OVERLAY ===== */
+#loginOverlay{
+ position:absolute;
+ inset:0;
+ background:rgba(2,6,23,.97);
+ z-index:100000;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+.loginBox{
+ width:280px;
+ background:#0f172a;
+ padding:20px;
+ border-radius:10px;
+ text-align:center;
+}
+.loginBox h2{
+ margin:0 0 10px;
+}
+.loginBox input{
+ width:100%;
+ height:40px;
+ margin-bottom:10px;
+ background:#020617;
+ border:1px solid #334155;
+ color:white;
+ border-radius:6px;
+ padding:0 10px;
+}
+.loginBox button{
+ width:100%;
+ height:42px;
+ background:#2563eb;
+ border:none;
+ color:white;
+ font-weight:bold;
+ border-radius:6px;
+}
+
+/* ===== EXPIRE OVERLAY ===== */
+#expireOverlay{
+ position:absolute; inset:0;
+ background:rgba(2,6,23,.96);
+ display:none; z-index:99999;
+ align-items:center; justify-content:center;
+ flex-direction:column; text-align:center;
+}
+#expireOverlay h1{font-size:32px;color:#ef4444;margin:0}
+#expireOverlay p{margin-top:10px;font-size:16px;color:#cbd5f5}
+
+/* ===== TOP ===== */
+.top{
+ display:flex;
+ flex-wrap:wrap;
+ align-items:center;
+ padding:8px;
+ gap:6px;
+}
+.betbar{
+ width:100%;
+ font-size:20px;
+ font-weight:800;
+ padding:10px;
+ text-align:center;
+ background:#0f172a;
+}
+.betbar.radarP{animation:radarP 1.2s infinite}
+.betbar.radarB{animation:radarB 1.2s infinite}
+@keyframes radarP{
+ 0%{box-shadow:0 0 0 rgba(59,130,246,.9)}
+ 70%{box-shadow:0 0 18px 8px rgba(59,130,246,.4)}
+ 100%{box-shadow:0 0 0 rgba(59,130,246,0)}
+}
+@keyframes radarB{
+ 0%{box-shadow:0 0 0 rgba(239,68,68,.9)}
+ 70%{box-shadow:0 0 18px 8px rgba(239,68,68,.4)}
+ 100%{box-shadow:0 0 0 rgba(239,68,68,0)}
+}
+
+.countbar{
+ width:100%;
+ text-align:center;
+ font-size:12px;
+ font-weight:bold;
+ color:#cbd5f5;
+}
+
+.btns{
+ width:100%;
+ display:flex;
+ gap:6px;
+}
+.btns button{
+ flex:1;
+ height:44px;
+ font-size:16px;
+ font-weight:bold;
+ background:#1e293b;
+ border:none;
+ color:white;
+ border-radius:6px;
+}
+
+/* ===== BODY ===== */
+.body{
+ flex:1;
+ display:flex;
+ flex-direction:column;
+ overflow:hidden;
+}
+.left{
+ flex:1;
+ overflow-y:auto;
+ padding:8px;
+}
+.sys{
+ display:flex;
+ align-items:center;
+ height:30px;
+ margin-bottom:4px;
+ background:#0b1220;
+ font-size:13px;
+}
+.sys.radar{animation:radar 1s infinite}
+@keyframes radar{
+ 0%{box-shadow:0 0 0 rgba(34,211,238,.8)}
+ 70%{box-shadow:0 0 12px 6px rgba(34,211,238,.3)}
+ 100%{box-shadow:0 0 0 rgba(34,211,238,0)}
+}
+.name{width:60px}
+.bet{width:30px;text-align:center}
+.pair{flex:1;font-weight:bold}
+.hist span{margin-right:2px;font-weight:bold}
+
+/* ===== ROADS ===== */
+.right{
+ padding:8px;
+ background:#020617;
+}
+canvas{
+ width:100%;
+ height:120px;
+ border:1px solid #1f2937;
+ background:black;
+}
+#bead{background:white}
+/* ===== COLOR MAJOR BOX ===== */
+.colorMajorBox{
+ width:100%;
+ text-align:center;
+ font-size:18px;
+ font-weight:800;
+ padding:10px;
+ background:linear-gradient(90deg,#0f172a,#111827);
+ border:1px solid #1f2937;
+ border-radius:8px;
+ letter-spacing:1px;
+}
+
+.colorMajorBox.p{
+ color:#3b82f6;
+ box-shadow:0 0 18px rgba(59,130,246,.6);
+}
+
+.colorMajorBox.b{
+ color:#ef4444;
+ box-shadow:0 0 18px rgba(239,68,68,.6);
+}
+
+/* ===== PREMIUM COLOR MAJOR BOX ===== */
+.colorMajorBox{
+ position:relative;
+ overflow:hidden;
+ font-size:18px;
+ font-weight:800;
+ padding:14px 10px;
+ border-radius:14px;
+ background:linear-gradient(135deg,#0f172a,#1e293b);
+ border:1px solid rgba(255,255,255,.1);
+ transition:.3s;
+}
+
+.colorMajorBox::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);
+ transform:translateX(-100%);
+ animation:shineMajor 4s linear infinite;
+}
+
+@keyframes shineMajor{
+ to{transform:translateX(100%)}
+}
+
+.colorMajorBox.p{
+ color:#60a5fa;
+ box-shadow:0 0 25px rgba(59,130,246,.6);
+}
+
+.colorMajorBox.b{
+ color:#f87171;
+ box-shadow:0 0 25px rgba(239,68,68,.6);
+}
+
+.colorMajorBox .percent{
+ font-size:14px;
+ opacity:.9;
+ margin-top:4px;
+}
+
+.colorMajorBox .result{
+ font-size:13px;
+ margin-top:6px;
+ font-weight:600;
+}
+
+.colorMajorBox .win{
+ color:#22c55e;
+}
+
+.colorMajorBox .lose{
+ color:#ef4444;
+}
+
+/* ===== COLOR MAJOR HISTORY GRID ===== */
+.colorMajorHistory{
+ display:grid;
+ grid-template-columns:repeat(15, 18px);
+ gap:6px;
+ justify-content:center;
+ margin-top:8px;
+}
+
+.cmBox{
+ width:18px;
+ height:18px;
+ border-radius:4px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:12px;
+ font-weight:900;
+ color:white;
+}
+
+.cmWin{
+ background:#22c55e;
+ box-shadow:0 0 8px rgba(34,197,94,.8);
+}
+
+.cmLose{
+ background:#ef4444;
+ box-shadow:0 0 8px rgba(239,68,68,.8);
+}
+
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<!-- LOGIN -->
+<div id="loginOverlay">
+ <div class="loginBox">
+  <h2>LOGIN</h2>
+  <input id="loginUser" placeholder="User">
+  <input id="loginPass" type="password" placeholder="Password">
+  <button onclick="doLogin()">เข้าสู่ระบบ</button>
+ </div>
+</div>
+
+<div id="expireOverlay">
+ <h1>โปรแกรมหมดอายุ</h1>
+ <p>หมดอายุการใช้งาน<br>23 เมษายน พ.ศ. 2569</p>
+</div>
+
+<!-- 🔹 แสดงวันหมดอายุด้านบน หลัง Login -->
+<div id="expiryBar">
+ วันหมดอายุโปรแกรม : วันที่ 23 เมษายน พ.ศ. 2569
+</div>
+
+<div class="top">
+ <div id="betbar" class="betbar">P 0 / B 0</div>
+ <div id="colorMajorBox" class="colorMajorBox">
+ สายสีมาก : -
+</div>
+
+ <div id="count" class="countbar">P=0 B=0 T=0 TOTAL=0</div>
+ <div class="btns">
+  <button onclick="play('P')">P</button>
+  <button onclick="play('B')">B</button>
+  <button onclick="play('T')">T</button>
+  <button onclick="undo()">UNDO</button>
+  <button onclick="clearAll()">CLEAR</button>
+ </div>
+</div>
+
+<div class="body">
+ <div class="left" id="systems"></div>
+ <div class="right">
+  <canvas id="big"></canvas>
+  <canvas id="bead"></canvas>
+ </div>
+</div>
+
+</div>
+
+<script>
+function doLogin(){
+ if(loginUser.value==="1234" && loginPass.value==="1234"){
+  document.getElementById("loginOverlay").style.display="none";
+  document.getElementById("expiryBar").style.display="block";
+ }else{
+  alert("User หรือ Password ไม่ถูกต้อง");
+ }
+}
+</script>
+
+<script>
+(function(){
+ const EXPIRE_AT = new Date(2026,3,23,0,0,0);
+ if(new Date() >= EXPIRE_AT){
+  document.getElementById("expireOverlay").style.display="flex";
+  document.querySelectorAll("button").forEach(b=>b.disabled=true);
+ }
+})();
+</script>
+
+<script>
+const SYSTEMS=[
+["DNA x",h=>h[h.length-1]],
+["DNA ,",h=>h[h.length-1]==="P"?"B":"P"],
+["DNA 2",h=>h.length>=2 && h[h.length-1]===h[h.length-2] ? h[h.length-1] : (h[h.length-1]==="P"?"B":"P")],
+["DNA /",h=>h.length%2===0?"P":"B"],
+["DNA 3",h=>h.length>=3 && new Set(h.slice(-3)).size===1 ? h[h.length-1] : (h[h.length-1]==="P"?"B":"P")],
+["DNA =",h=>h.filter(x=>x==="P").length<=h.filter(x=>x==="B").length?"P":"B"],
+["DNA 5",h=>h.slice(-5).filter(x=>x==="P").length>h.slice(-5).filter(x=>x==="B").length?"P":"B"],
+["DNA C",h=>h.length>=4 && new Set(h.slice(-4)).size===1 ? (h[h.length-1]==="P"?"B":"P") : h[h.length-1]],
+["DNA T",h=>h.slice(-6).filter(x=>x==="P").length>h.slice(-6).filter(x=>x==="B").length?"P":"B"]
+];
+
+const ROWS=6,COLS=40,STEP=7;
+let history=[],h=[],playCnt=Array(9).fill(0),winCnt=Array(9).fill(0),
+mark=Array.from({length:9},()=>[]),
+big=Array.from({length:ROWS},()=>Array(COLS).fill("")),
+bead=[],bc=0,br=0,last=null;
+window.colorMajorHistory=[];
+
+const box=document.getElementById("systems");
+SYSTEMS.forEach((s,i)=>{
+box.innerHTML+=`
+<div class="sys" id="row${i}">
+ <div class="name">${s[0]}</div>
+ <div class="bet" id="bet${i}">-</div>
+ <div class="pair" id="pair${i}">P 0 / B 0</div>
+ <div class="hist" id="hist${i}"></div>
+</div>`});
+
+function play(v){history.push(v);rebuild();}
+function replay(v){
+ if(v==="T"){h.push("T");bead.push("T");return;}
+ 
+ const preds = h.length
+  ? SYSTEMS.map(s=>s[1](h))
+  : Array(SYSTEMS.length).fill(null);
+ h.push(v);
+
+ /* ===== UPDATE COLOR MAJOR HISTORY ===== */
+const predsNow = SYSTEMS.map(s=>s[1](h.slice(0,-1)));
+
+let countP=0,countB=0;
+predsNow.forEach(p=>{
+ if(p==="P") countP++;
+ if(p==="B") countB++;
+});
+
+let majorSide=null;
+if(countP>countB) majorSide="P";
+else if(countB>countP) majorSide="B";
+
+if(majorSide && v!=="T"){
+ if(!window.colorMajorHistory)
+   window.colorMajorHistory=[];
+ 
+ if(v===majorSide)
+   window.colorMajorHistory.push("W");
+ else
+   window.colorMajorHistory.push("L");
+
+ if(window.colorMajorHistory.length>20)
+   window.colorMajorHistory.shift();
+}
+
+ preds.forEach((p,i)=>{
+  if(!p)return;
+  playCnt[i]++;
+  if(p===v){winCnt[i]++;mark[i].push("/")}else mark[i].push("x");
+  if(mark[i].length>14)mark[i].shift();
+ });
+ addBig(v);bead.push(v);
+}
+function rebuild(){resetState();history.forEach(v=>replay(v));draw();}
+function undo(){if(!history.length)return;history.pop();rebuild();}
+function clearAll(){history=[];resetState();draw();}
+function resetState(){
+ h=[];playCnt.fill(0);winCnt.fill(0);
+ mark=Array.from({length:9},()=>[]);
+ big=Array.from({length:ROWS},()=>Array(COLS).fill(""));
+ bead=[];bc=0;br=0;last=null;
+ window.colorMajorHistory=[];   // 👈 เพิ่มตรงนี้
+}
+function addBig(v){
+ if(!last){big[0][0]=v;last=v;return;}
+ if(v===last){
+  if(br+1<ROWS&&!big[br+1][bc])br++;
+  else{bc++;br=0;}
+ }else{bc++;br=0;}
+ if(bc>=COLS){
+  for(let r=0;r<ROWS;r++)big[r].shift(),big[r].push("");
+  bc=COLS-1;
+ }
+big[br][bc]=v;last=v;
+}
+
+  function draw(){
+
+ let sumP=0,sumB=0,maxPct=0;
+ let countP=0,countB=0;
+
+ SYSTEMS.forEach((s,i)=>{
+  const pred = h.length ? s[1](h) : null;
+
+  if(pred==="P") countP++;
+  if(pred==="B") countB++;
+
+  const pct = playCnt[i]
+    ? Math.round(winCnt[i]/playCnt[i]*100)
+    : 0;
+
+  maxPct = Math.max(maxPct,pct);
+  const opp = 100-pct;
+
+  document.getElementById("bet"+i).textContent = pred || "-";
+
+  document.getElementById("pair"+i).textContent =
+    pred==="P"
+      ? `P ${pct} / B ${opp}`
+      : `P ${opp} / B ${pct}`;
+
+  if(pred==="P") sumP += pct;
+  if(pred==="B") sumB += pct;
+
+  document.getElementById("hist"+i).innerHTML =
+    mark[i].map(m=>
+      `<span style="color:${m=="/"?"#16a34a":"#dc2626"}">${m}</span>`
+    ).join("");
+
+  document.getElementById("row"+i)
+    .classList.toggle("radar",pct===maxPct && maxPct>0);
+ });
+
+ /* ===== COLOR MAJOR ===== */
+const colorBox = document.getElementById("colorMajorBox");
+colorBox.classList.remove("p","b");
+
+let majorSide = null;
+
+if(countP > countB){
+  majorSide = "P";
+  colorBox.classList.add("p");
+}
+else if(countB > countP){
+  majorSide = "B";
+  colorBox.classList.add("b");
+}
+
+const totalSystems = countP + countB || 1;
+const percentP = Math.round(countP/totalSystems*100);
+const percentB = 100 - percentP;
+
+let html = "";
+
+if(majorSide){
+  html += `สายสีมาก : ${majorSide} (${majorSide==="P"?countP:countB} สาย)`;
+}else{
+  html += `สายสีมาก : เสมอ (${countP}/${countB})`;
+}
+
+html += `<div style="font-size:13px;margin-top:4px;opacity:.9">
+P ${percentP}% | B ${percentB}%
+</div>`;
+
+/* ===== ผลล่าสุด ===== */
+
+const lastWL = window.colorMajorHistory[
+  window.colorMajorHistory.length-1
+];
+
+const winCount =
+  window.colorMajorHistory.filter(x=>x==="W").length;
+
+const totalPlay =
+  window.colorMajorHistory.length || 1;
+
+const acc =
+  Math.round(winCount/totalPlay*100);
+
+let resultText = "";
+let resultColor = "#94a3b8";
+
+if(lastWL==="W"){
+  resultText="✔ ชนะ";
+  resultColor="#22c55e";
+}
+else if(lastWL==="L"){
+  resultText="✖ แพ้";
+  resultColor="#ef4444";
+}
+
+html += `
+<div style="font-size:12px;margin-top:5px;color:${resultColor}">
+  ${resultText} | แม่น ${acc}%
+</div>
+`;
+
+html += `<div class="colorMajorHistory">`;
+
+window.colorMajorHistory.forEach(r=>{
+  html += `
+    <div class="cmBox ${r==="W"?"cmWin":"cmLose"}">
+      ${r==="W"?"✔":"✖"}
+    </div>
+  `;
+});
+
+html += `</div>`;
+
+colorBox.innerHTML = html;
+
+
+ /* ===== TOP BAR ===== */
+ const total = sumP+sumB || 1;
+ const pPct = Math.round(sumP/total*100);
+ const bPct = 100-pPct;
+
+ const bar=document.getElementById("betbar");
+ bar.textContent=`P ${pPct} / B ${bPct}`;
+ bar.classList.remove("radarP","radarB");
+ if(pPct>bPct) bar.classList.add("radarP");
+ else if(bPct>pPct) bar.classList.add("radarB");
+
+ drawBig();
+ drawBead();
+}
+
+function drawBig(){
+ const c=document.getElementById("big").getContext("2d");
+ c.clearRect(0,0,c.canvas.width,c.canvas.height);
+ for(let r=0;r<ROWS;r++)for(let x=0;x<COLS;x++)
+  if(big[r][x]){
+   c.strokeStyle=big[r][x]==="P"?"#3b82f6":"#ef4444";
+   c.beginPath();c.arc(x*STEP+STEP,r*STEP+STEP,4,0,Math.PI*2);c.stroke();
+ }}
+function drawBead(){
+ const c=document.getElementById("bead").getContext("2d");
+ c.clearRect(0,0,c.canvas.width,c.canvas.height);
+ bead.forEach((v,i)=>{
+  const r=i%ROWS,x=Math.floor(i/ROWS);
+  if(x>=COLS)return;
+  c.fillStyle=v==="P"?"#3b82f6":v==="B"?"#ef4444":"#22c55e";
+  c.beginPath();c.arc(x*STEP+STEP,r*STEP+STEP,3,0,Math.PI*2);c.fill();
+ });
+}
+
+draw();   // 👈 เพิ่มบรรทัดนี้
+
+</script>
+
+<script>
+
+function resizeCanvas(){
+ document.querySelectorAll("canvas").forEach(c=>{
+  const ratio = window.devicePixelRatio || 1;
+  const w = c.clientWidth;
+  const h = c.clientHeight;
+
+  c.width = w * ratio;
+  c.height = h * ratio;
+
+  const ctx = c.getContext("2d");
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+ });
+
+ draw(); // ✅ วาดหลัง resize
+}
+
+window.addEventListener("resize",resizeCanvas);
+resizeCanvas();
+</script>
+
+</body>
+</html>
